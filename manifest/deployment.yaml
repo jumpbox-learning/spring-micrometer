@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: metric
+  name: metric
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metric
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: metric
+      annotations:
+        # Just add these annotations to configure Prometheus.
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port:  "8080"
+    spec:
+      containers:
+      - image: sikiryl/metric:1.0
+        name: metric
+        resources: {}
+status: {}
